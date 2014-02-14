@@ -21,8 +21,26 @@ class SitesController < ApplicationController
       f.html
       f.json { render :json => @site.as_json(include: :links)}
     end
-
   end
+
+  def edit
+  end
+
+  def update
+    url = params.require(:site)[:url]
+    @site = Site.create(url: url)
+    LinksWorker.perform_async(@site.id)
+    respond_to do |f|
+      f.html { redirect_to site_path(@site) }
+      f.json { render :json => @site }
+    end
+  end
+
+  def destroy
+    Site.find(params[:id]).destroy
+    redirect_to site
+  end
+
 
   def linkfarm
   end
