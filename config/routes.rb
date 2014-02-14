@@ -3,5 +3,9 @@ LinkChecker::Application.routes.draw do
   get '/sites/new', to: 'sites#new', as: 'new_site'
   post '/sites', to: 'sites#create', as: 'sites'
   get '/sites/:id', to: 'sites#show', as: 'site'
+
+  get '/sites/:id/edit', to: 'sites#edit', as: :edit_sites
+
+
   get '/linkfarm', to: 'sites#linkfarm'
 end

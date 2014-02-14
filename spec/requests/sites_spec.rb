@@ -61,13 +61,22 @@ describe "Sites" do
 	end
 
 	describe "GET /sites/:id/edit" do
-		it 'is successful with HTML'
-		it 'is a 404 with JSON'
+		it 'is successful with HTML' do
+			response.should redirect_to '/sites/:id'
+		end
+		it 'is a 404 with JSON' do
+			response.should_not be_success
+			response.should redirect_to '/404'
+		end
 	end
 
 	describe "GET /sites/new" do
-		it 'is successful with HTML'
-		it 'is a 404 with JSON'
+		it 'is successful with HTML' do
+			response.code.should == 201
+		end
+		it 'is a 404 with JSON' do
+			response.code.should == 404
+		end
 	end
 
 	describe "GET /linkfarm/" do
@@ -76,7 +85,14 @@ describe "Sites" do
 	end
 
 	describe "DELETE /sites/:id" do
-		it 'succeeds and redirects with HTML'
-		it 'succeeds and does not redirect with JSON'
+		it 'succeeds and redirects with HTML' do
+			response.code.should == 302
+			response.should redirect_to site
+		end
+
+		it 'succeeds and does not redirect with JSON' do
+			response.should_not be_success
+			response.code.should == 200
+		end
 	end
 end

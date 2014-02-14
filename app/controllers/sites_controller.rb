@@ -19,8 +19,9 @@ class SitesController < ApplicationController
     @links = @site.links
     respond_to do |f|
       f.html
-      f.json { render :json => @site }
+      f.json { render :json => @site.as_json(include: :links)}
     end
+
   end
 
   def linkfarm
